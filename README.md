@@ -98,9 +98,7 @@ top_suburbs <- properties %>%
   count(suburb, sort = TRUE) %>%
   head(3)
 Dialogue Sentiment
-r
-Copy
-Edit
+
 library(ggplot2)
 library(sentimentr)
 
@@ -114,17 +112,12 @@ Clone this repository
 
 Install required R packages:
 
-r
-Copy
-Edit
 install.packages(c("tidyverse", "caret", "xgboost", "sentimentr"))
 Run RMarkdown files in /scripts/
 
 📄 License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-vbnet
-Copy
-Edit
 
-Let me know if you'd like a shorter version, embedded visuals, or help setting up `.Rproj` structure or GitHub
+
+
