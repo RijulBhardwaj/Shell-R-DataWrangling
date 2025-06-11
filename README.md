@@ -25,44 +25,90 @@ text
 └── output/
 └── predicted_usefulness_scores.csv
 
+markdown
+Copy
+Edit
 
 ---
 
-## 🧩 Task C: Melbourne Property Market Analysis
+## 🧩 Task C: Exploratory Data Analysis Using R
 
-### 📊 Dataset Overview
+**Are you interested in buying a property in Melbourne?** This task explores over 13 years of Melbourne’s real estate data collected from a top property website. The dataset (`property_transaction_victoria.csv`) contains detailed transaction records including price, type, size, and descriptions.
 
-Analyzing 13 years of property transactions in Greater Melbourne with 25+ features including:
+### 📑 Column Overview
 
-- Property type, price, bedrooms, bathrooms  
-- Land/building sizes, location data  
-- Transaction dates and descriptions  
+Key columns include:  
+- `suburb`, `property_type`, `price`, `bedrooms`, `bathrooms`, `land_size`, `sold_date`, `description`, etc.
 
-### 🔍 Key Analyses
+### 📝 Analysis Questions
 
-- **Transaction Trends**  
-  - Identify top 3 suburbs by volume  
-  - Monthly transaction visualization for 2022  
+1. **Top Suburbs**  
+   Identify the top 3 suburbs with the highest transaction volume. Plot their monthly transaction counts for 2022. Include *Toorak* even if not in top 3.
 
-- **Text Analysis**  
-  - Extract top 3 price-impacting keywords from descriptions (10% sample)  
+2. **Keyword Impact**  
+   From a 10% sample, extract 3 keywords from the `description` field most associated with price variation.
 
-- **Price Correlations**  
-  - Compute price vs. land size correlations by suburb/property type  
+3. **Price Correlations**  
+   Compute correlation between `price` and `land_size` by suburb and property type (house, unit, townhouse, apartment).
 
-- **Capital Gains**  
-  - Top 5 properties with highest price increases (≤5 year holding period)  
+4. **Capital Gains**  
+   Identify top 5 properties with highest price gains (≤5-year holding). Include `address`, `capital gain`, and `duration`.
 
-- **Price Volatility**  
-  - Identify most volatile suburb-property type combinations in 2022  
+5. **Price Volatility**  
+   Analyze which suburb-property type combinations showed the most median price volatility in 2022. Visualize the top 5.
 
-- **Price Prediction**  
-  - Forecast September 2025 prices for 4-bedroom houses in 6 target suburbs  
+6. **Price Prediction**  
+   Predict September 2025 prices for 4-bedroom, 2-bathroom renovated houses in 6 suburbs (Mulgrave, Vermont South, Doncaster East, Rowville, Glen Waverley, Wheelers Hill) based on the dataset.
 
-### 🛠️ Technical Implementation
+---
+
+## 🧠 Task D: Predictive Data Analysis Using R
+
+**How useful is the FLoRA GPT-4o chatbot?** This task evaluates 434 anonymized student–chatbot dialogues to build predictive models for usefulness scores (Likert 1–5).
+
+### 📂 Data Overview
+
+Two types of CSVs:
+- `dialogue_utterance_{train,validation,test}.csv`
+  - `Dialogue_ID`, `Timestamp`, `Interlocutor`, `Utterance_text`
+- `dialogue_usefulness_{train,validation,test}.csv`
+  - `Dialogue_ID`, `Usefulness_score`
+
+### 📝 Modeling Tasks
+
+1. **Feature Engineering**  
+   Propose features (e.g., dialogue length, sentiment score, response time, complexity).  
+   Visualize 2 of them using boxplots between low-score (1–2) and high-score (4–5) groups.  
+   Test statistical significance.
+
+2. **Model 1: Baseline**  
+   Build a model (e.g., regression tree, polynomial regression) using ≥5 features.  
+   Evaluate on validation set using RMSE/R². This is Model 1.
+
+3. **Model Improvement**  
+   Improve Model 1 by:
+   - Selecting feature subsets
+   - Handling outliers
+   - Scaling/transforming variables
+   - Trying new models (e.g., Random Forest, XGBoost)  
+   Report metrics and justify your choices.
+
+4. **Personal Dialogue Prediction**  
+   Predict usefulness of your own dialogue (if in training set, remove it).  
+   Compare prediction vs. ground truth. Identify influential features and use model interpretability tools (e.g., feature importance).
+
+5. **Final Test Set Prediction**  
+   Use best model to fill `Usefulness_score` in `dialogue_usefulness_test.csv` and save as:  
+   `LastName_StudentNumber_dialogue_usefulness_test.csv`  
+   Final performance will be measured based on **RMSE** on hidden scores.
+
+---
+
+## 🧪 Sample Code Snippets
+
+### Property Analysis
 
 ```r
-# Example code snippet for transaction analysis
 library(tidyverse)
 library(lubridate)
 
@@ -72,49 +118,16 @@ properties <- read_csv("data/property_transaction_victoria.csv") %>%
 top_suburbs <- properties %>%
   count(suburb, sort = TRUE) %>%
   head(3)
-🧠 Task D: Chatbot Dialogue Usefulness Prediction
-🗃️ Dataset Overview
-434 anonymized student-chatbot dialogues
-
-Features: Dialogue text, timestamps, speaker labels
-
-Target: Usefulness score (1–5 Likert scale)
-
-⚙️ Modeling Approach
-Feature Engineering
-
-Dialogue length, sentiment score, response time
-
-Keyword presence, question complexity metrics
-
-Model Development
-
-Baseline: Regression trees, polynomial regression
-
-Advanced: Random forests, XGBoost
-
-Evaluation
-
-RMSE / R² on validation set
-
-Feature importance analysis
-
-Optimization
-
-Hyperparameter tuning
-
-Error analysis and model refinement
-
-📈 Example Feature Analysis
-
+Dialogue Sentiment
+r
+Copy
+Edit
 library(ggplot2)
 library(sentimentr)
 
-# Sentiment analysis feature
 dialogues <- dialogues %>%
   mutate(sentiment = sentiment_by(utterance_text)$ave_sentiment)
 
-# Visualize score differences
 ggplot(dialogues, aes(x = factor(Usefulness_score), y = sentiment)) +
   geom_boxplot()
 🚀 Getting Started
@@ -126,7 +139,7 @@ r
 Copy
 Edit
 install.packages(c("tidyverse", "caret", "xgboost", "sentimentr"))
-Run RMarkdown files in /scripts/ to reproduce analysis
+Run RMarkdown files in /scripts/
 
 📄 License
 This project is licensed under the MIT License. See the LICENSE file for details.
@@ -135,4 +148,4 @@ vbnet
 Copy
 Edit
 
-Let me know if you want badges, visuals, or a version with clickable links and embedded plots!
+Let me know if you'd like a shorter version, embedded visuals, or help setting up `.Rproj` structure or GitHub
