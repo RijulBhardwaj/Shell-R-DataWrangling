@@ -1,46 +1,128 @@
 # Shell-R-DataWrangling
 Data Science Portfolio Project: Real Estate Analytics &amp; Dialogue Usefulness Prediction
 
-Task 1: Exploratory Data Analysis (EDA) of Property Data
-Dataset: property_transaction_victoria.csv (Melbourne real estate transactions).
+A comprehensive data science project featuring:
 
-Key Questions
-Top Suburbs by Transactions: Identify top 3 suburbs by transaction volume (2022) and visualize monthly trends.
+Exploratory analysis of Melbourne property transactions (2010-2023)
 
-Keyword Impact on Prices: Extract top 3 keywords from property descriptions (10% sample) correlated with price.
+Machine learning model to predict chatbot dialogue usefulness
 
-Price vs. Land Size: Compute correlations for top suburbs and property types (House, Unit, etc.).
+Project Structure
+text
+├── data/
+│   ├── property_transaction_victoria.csv
+│   ├── dialogue_utterance_{train,validation,test}.csv
+│   └── dialogue_usefulness_{train,validation,test}.csv
+├── reports/
+│   ├── EDA_Property_Analysis.pdf
+│   └── Dialogue_Usefulness_Prediction.pdf
+├── scripts/
+│   ├── Task_C_Property_Analysis.Rmd
+│   └── Task_D_Dialogue_Analysis.Rmd
+└── output/
+    └── predicted_usefulness_scores.csv
+Task C: Melbourne Property Market Analysis
+Dataset Overview
+Analyzing 13 years of property transactions in Greater Melbourne with 25+ features including:
 
-Capital Gains Analysis: Identify top 5 properties with highest price increases (≤5 years between sales).
+Property type, price, bedrooms, bathrooms
 
-Price Volatility: Find suburb-property type combinations with highest median price volatility (2022).
+Land/building sizes, location data
 
-Price Prediction: Forecast September 2025 prices for 4-bedroom houses in 6 suburbs using historical data.
+Transaction dates and descriptions
 
-Skills Demonstrated:
+Key Analyses
+Transaction Trends
 
-Data cleaning (dplyr, tidyr), time-series analysis (lubridate), NLP (tm, tidytext), regression modeling (caret).
+Identify top 3 suburbs by volume
 
-Task 2: Predictive Modeling of Dialogue Usefulness
-Dataset: Chatbot conversational data (dialogue_utterance_*.csv, dialogue_usefulness_*.csv).
+Monthly transaction visualization for 2022
 
-Key Steps
-Feature Engineering:
+Text Analysis
 
-Propose features (e.g., dialogue length, sentiment score, response time) and validate with boxplots/statistical tests (t-test/ANOVA).
+Extract top 3 price-impacting keywords from descriptions (10% sample)
 
-Model Building:
+Price Correlations
 
-Train models (e.g., regression trees, polynomial regression) using 5+ features. Evaluate on validation set (RMSE/R²).
+Compute price vs. land size correlations by suburb/property type
 
-Model Optimization:
+Capital Gains
 
-Improve performance via feature selection, outlier removal, scaling, or algorithm choice (e.g., random forests, XGBoost).
+Top 5 properties with highest price increases (≤5 year holding period)
 
-Prediction & Analysis:
+Price Volatility
 
-Predict usefulness scores for test dialogues and analyze feature importance (e.g., SHAP values, coefficients).
+Identify most volatile suburb-property type combinations in 2022
 
-Skills Demonstrated:
+Price Prediction
 
-Feature engineering (stringr, sentimentr), ML pipelines (caret, xgboost), statistical testing, model interpretation.
+Forecast September 2025 prices for 4-bedroom houses in 6 target suburbs
+
+Technical Implementation
+r
+# Example code snippet for transaction analysis
+library(tidyverse)
+library(lubridate)
+
+properties <- read_csv("data/property_transaction_victoria.csv") %>%
+  mutate(sold_date = dmy(sold_date))
+
+top_suburbs <- properties %>%
+  count(suburb, sort = TRUE) %>%
+  head(3)
+Task D: Chatbot Dialogue Usefulness Prediction
+Dataset Overview
+434 anonymized student-chatbot dialogues
+
+Features: Dialogue text, timestamps, speaker labels
+
+Target: Usefulness score (1-5 Likert scale)
+
+Modeling Approach
+Feature Engineering
+
+Dialogue length, sentiment score, response time
+
+Keyword presence, question complexity metrics
+
+Model Development
+
+Baseline: Regression trees, polynomial regression
+
+Advanced: Random forests, XGBoost
+
+Evaluation
+
+RMSE/R² on validation set
+
+Feature importance analysis
+
+Optimization
+
+Hyperparameter tuning
+
+Error analysis and model refinement
+
+Example Feature Analysis
+r
+library(ggplot2)
+library(sentimentr)
+
+# Sentiment analysis feature
+dialogues <- dialogues %>%
+  mutate(sentiment = sentiment_by(utterance_text)$ave_sentiment)
+
+# Visualize score differences
+ggplot(dialogues, aes(x=factor(Usefulness_score), y=sentiment)) +
+  geom_boxplot()
+Getting Started
+Clone repository
+
+Install required R packages:
+
+r
+install.packages(c("tidyverse", "caret", "xgboost", "sentimentr"))
+Run RMarkdown files in /scripts/
+
+License
+MIT License
