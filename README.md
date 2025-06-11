@@ -7,27 +7,6 @@ A comprehensive data science project featuring:
 - 🏡 Exploratory analysis of Melbourne property transactions (2010–2023)  
 - 💬 Machine learning model to predict chatbot dialogue usefulness
 
----
-
-## 📁 Project Structure
-
-text
-├── data/
-│ ├── property_transaction_victoria.csv
-│ ├── dialogue_utterance_{train,validation,test}.csv
-│ └── dialogue_usefulness_{train,validation,test}.csv
-├── reports/
-│ ├── EDA_Property_Analysis.pdf
-│ └── Dialogue_Usefulness_Prediction.pdf
-├── scripts/
-│ ├── Task_C_Property_Analysis.Rmd
-│ └── Task_D_Dialogue_Analysis.Rmd
-└── output/
-└── predicted_usefulness_scores.csv
-
-markdown
-Copy
-Edit
 
 ---
 
